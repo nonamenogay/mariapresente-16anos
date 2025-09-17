@@ -37,13 +37,13 @@
 
         .main-container {
             width: 100%;
-            max-width: 800px;
+            max-width: 960px; /* Aumentado */
             text-align: center;
         }
         
         .screen {
             width: 100%;
-            max-width: 800px;
+            max-width: 960px; /* Aumentado */
             padding: 20px;
             animation: fadeIn 0.5s ease-in-out;
         }
@@ -55,7 +55,7 @@
 
         #cutscene-container {
             position: relative;
-            height: 450px; /* Aumentado */
+            height: 500px; /* Aumentado */
             border: 4px solid var(--secondary-color);
             border-radius: 12px;
             overflow: hidden;
@@ -80,60 +80,62 @@
 
         .character {
             position: absolute;
-            bottom: 40px; /* Ajustado para nova altura */
-            width: 60px;
-            height: 90px;
+            bottom: 40px;
+            width: 80px; /* Aumentado */
+            height: 110px; /* Aumentado */
             transition: all 0.5s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        .character .visuals { position: relative; width: 50px; height: 70px; }
+        .character .visuals { position: relative; width: 60px; height: 90px; }
         .character .head {
-            position: absolute; top: 0; left: 10px; width: 30px; height: 30px;
+            position: absolute; top: 0; left: 15px; width: 30px; height: 30px;
             border-radius: 50%; background-color: #ffd6e3;
         }
         .character .body {
-            position: absolute; bottom: 0; left: 20px; width: 10px; height: 40px;
+            position: absolute; bottom: 0; left: 25px; width: 10px; height: 60px; /* Aumentado */
         }
         .character .hair {
-            position: absolute; top: -5px; left: 5px; width: 40px; height: 20px;
+            position: absolute; top: -5px; left: 10px; width: 40px; height: 20px;
             background-color: var(--brown); border-radius: 50% 50% 0 0;
         }
         .name-tag {
-            font-size: 0.75em;
+            font-size: 0.8em;
             font-weight: 600;
             color: var(--white);
-            background-color: rgba(0, 0, 0, 0.4);
-            padding: 2px 6px;
-            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 3px 8px;
+            border-radius: 8px;
             margin-top: 5px;
         }
 
         /* Personagens Customizados */
-        #maria { left: 45%; } #maria .body { background-color: var(--primary-color); }
-        #mae { left: 25%; } #mae .body { background-color: #8e44ad; } #mae .hair { background-color: #333; height: 25px; border-radius: 40% 40% 20% 20%;}
-        #irmao { right: 25%; } #irmao .body { background-color: #2980b9; } #irmao .hair { width: 30px; height: 10px; top: 0; left: 10px; border-radius: 20px; }
+        #maria { left: 50%; transform: translateX(-50%); } #maria .body { background-color: var(--primary-color); }
+        #mae { left: 20%; } #mae .body { background-color: #8e44ad; } #mae .hair { background-color: #333; height: 25px; border-radius: 40% 40% 20% 20%;}
+        #irmao { right: 20%; } #irmao .body { background-color: #2980b9; } #irmao .hair { width: 30px; height: 10px; top: 0; left: 15px; border-radius: 20px; }
         
         /* Personagens do Sonho */
         .dream-char { animation: float 6s ease-in-out infinite; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-        #riam { left: 5%; bottom: 120px; } #riam .body { background-color: #1abc9c; }
-        #samuel { left: 20%; bottom: 160px; } #samuel .body { background-color: #e74c3c; }
-        #cecilia { left: 35%; bottom: 140px; } #cecilia .body { background-color: #f1c40f; } #cecilia .hair { background-color: #c68642; }
-        #maluhelen { right: 35%; bottom: 150px; } #maluhelen .body { background-color: #9b59b6; } #maluhelen .hair { background-color: #e91e63; height: 30px; width: 30px; left: 10px; border-radius: 50%; }
-        #vitoria { right: 20%; bottom: 130px; } #vitoria .body { background-color: #3498db; }
-        #maira { right: 5%; bottom: 170px; filter: drop-shadow(0 0 10px white); } #maira .body { background-color: var(--white); } #maira .hair { background-color: #fdd835; }
+        #riam { left: 5%; bottom: 150px; } #riam .body { background-color: #1abc9c; }
+        #samuel { left: 20%; bottom: 190px; } #samuel .body { background-color: #e74c3c; }
+        #cecilia { left: 35%; bottom: 170px; } #cecilia .body { background-color: #f1c40f; } #cecilia .hair { background-color: #c68642; }
+        #maluhelen { right: 35%; bottom: 180px; } #maluhelen .body { background-color: #9b59b6; } #maluhelen .hair { background-color: #e91e63; height: 30px; width: 30px; left: 15px; border-radius: 50%; }
+        #vitoria { right: 20%; bottom: 160px; } #vitoria .body { background-color: #3498db; }
+        #maira { right: 5%; bottom: 200px; filter: drop-shadow(0 0 10px white); } #maira .body { background-color: var(--white); } #maira .hair { background-color: #fdd835; }
 
         .speech-bubble {
             position: absolute;
-            bottom: 180px; background: var(--white);
+            bottom: 220px; /* Aumentado */
+            background: var(--white);
             padding: 12px 18px; border-radius: 15px;
             border: 2px solid var(--primary-color);
             font-weight: 600; text-align: center;
             opacity: 0; transform: scale(0.8) translateY(20px);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            max-width: 240px; z-index: 10;
+            max-width: 280px; /* Aumentado */
+            z-index: 10;
         }
         .speech-bubble.visible { opacity: 1; transform: scale(1) translateY(0); }
         .speech-bubble::after { /* Seta apontando para baixo */
@@ -161,8 +163,8 @@
         }
 
         .scene-element { position: absolute; opacity: 0; transition: opacity 0.5s; }
-        #table-element { bottom: 0; left: 50%; transform: translateX(-50%); width: 350px; height: 120px; background-color: var(--table-color); border-top: 10px solid #804020; }
-        .table-food { bottom: 120px; font-size: 30px; }
+        #table-element { bottom: 0; left: 50%; transform: translateX(-50%); width: 450px; height: 140px; background-color: var(--table-color); border-top: 10px solid #804020; }
+        .table-food { bottom: 140px; font-size: 30px; }
         #cuscuz-food { left: 35%; } #acerola-food { left: 60%; }
         #dream-sign { top: 20px; left: 50%; transform: translateX(-50%); color: var(--white); font-size: 1.5em; font-weight: bold; text-shadow: 2px 2px 4px #00000080; }
         #party-banner { top: 30px; left: 50%; transform: translateX(-50%); font-size: 1.8em; color: var(--primary-color); font-weight: bold; text-shadow: 1px 1px 2px var(--white); }
@@ -183,7 +185,7 @@
 
         .photo-container { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
         .photo { width: 250px; height: 250px; object-fit: cover; border: 4px solid var(--secondary-color); border-radius: 12px; }
-        #typing-text { font-size: 1.2em; color: #d1495b; margin-top: 30px; min-height: 40px; font-weight: 600; text-align: left; max-width: 600px; line-height: 1.6; }
+        #typing-text { font-size: 1.2em; color: #d1495b; margin-top: 30px; min-height: 40px; font-weight: 600; text-align: left; max-width: 700px; line-height: 1.6; margin: 30px auto 0 auto; }
         
         button {
             padding: 12px 25px; background: var(--secondary-color); color: var(--white);
@@ -348,37 +350,37 @@
 
         setTimeout(() => {
             const container = document.getElementById('cutscene-container');
-            const containerRect = container.getBoundingClientRect();
-            
+            const containerPadding = 15;
+
             bubble.innerText = line.text;
-            
+            bubble.style.transform = 'translateX(0)'; // Reset transform
+
             if (line.speaker) {
                 const speakerEl = document.getElementById(line.speaker);
                 const speakerRect = speakerEl.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
                 
-                // Posição inicial (centralizado no personagem)
-                let bubbleLeft = (speakerRect.left + speakerRect.width / 2) - containerRect.left;
+                const speakerCenter = speakerRect.left + speakerRect.width / 2;
+                const bubbleWidth = bubble.offsetWidth;
+
+                let bubbleLeft = (speakerCenter - containerRect.left) - (bubbleWidth / 2);
+
+                // Boundary checks to prevent overflow
+                if (bubbleLeft < containerPadding) {
+                    bubbleLeft = containerPadding;
+                }
+                if (bubbleLeft + bubbleWidth > container.offsetWidth - containerPadding) {
+                    bubbleLeft = container.offsetWidth - bubbleWidth - containerPadding;
+                }
+                
                 bubble.style.left = `${bubbleLeft}px`;
-                bubble.style.transform = 'translateX(-50%)';
 
             } else { // Narração centralizada
                 bubble.style.left = '50%';
                 bubble.style.transform = 'translateX(-50%)';
             }
             
-            // Força o navegador a recalcular o layout para evitar overflow
-             requestAnimationFrame(() => {
-                const bubbleRect = bubble.getBoundingClientRect();
-                if (bubbleRect.left < containerRect.left) {
-                    bubble.style.left = '10px';
-                    bubble.style.transform = 'translateX(0)';
-                } else if (bubbleRect.right > containerRect.right) {
-                    bubble.style.left = `${containerRect.width - bubble.offsetWidth - 10}px`;
-                    bubble.style.transform = 'translateX(0)';
-                }
-                 bubble.classList.add('visible');
-             });
-
+            bubble.classList.add('visible');
             scriptIndex++;
         }, 100);
     }
@@ -397,7 +399,6 @@
         const text = `Feliz aniversário, Maria Cabeçuda!\n\nEspero que você tenha uma ótima vida pela frente, sempre alegrando nossos dias com esse sorriso contagiante.\n\nSabemos que você irá conquistar tudo o que quiser, pois você é uma garota esforçada, simpática e inteligente.\n\nQue cada sonho seu se torne realidade, que você continue inspirando todos ao seu redor, e que nunca falte alegria, amor e amizade verdadeira na sua vida.\n\nNão sei para você, mas conhecer você me ajudou muito e me fez perceber como pessoas especiais como você fazem a diferença no mundo.\n\nObrigado por existir e por permitir que a gente faça parte da sua história. ❤️\n– O certo é “recursos” e não “rescusos”. – Riam Miguel`;
         const typingText = document.getElementById('typing-text');
         
-        // Substitui quebras de linha por <br> para HTML
         const formattedText = text.replace(/\n/g, '<br>');
         let j = 0;
         typingText.innerHTML = '';
