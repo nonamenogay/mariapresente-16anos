@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 Feliz Aniversário, Maria!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #e63946; /* Vermelho forte */
+            --secondary-color: #ff8fa3; /* Vermelho claro */
+            --background-start: #ffddd2;
+            --background-end: #fff1e6;
+            --text-color: #555;
+            --white: #ffffff;
+            --brown: #7b3f00;
+            --table-color: #a0522d;
+            --dream-bg-start: #ffafcc;
+            --dream-bg-end: #bde0fe;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--background-start), var(--background-end));
+            color: var(--text-color);
+            padding: 10px;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+        }
+        
+        .screen {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #cutscene-container {
+            position: relative;
+            height: 450px; /* Aumentado */
+            border: 4px solid var(--secondary-color);
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: #faf0e6;
+            transition: background-color 1s ease;
+        }
+        
+        .scene-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease;
+            background-size: cover;
+            background-position: center;
+        }
+        .scene-bg.active { opacity: 1; }
+
+        #scene-casa { background-color: #faf0e6; }
+        #scene-quarto { background-color: #e0d8f0; } /* Roxo claro */
+        #scene-sonho { background: linear-gradient(135deg, var(--dream-bg-start), var(--dream-bg-end)); }
+        #scene-festa { background: linear-gradient(135deg, #a2d2ff, #ffc8dd); }
+
+        .character {
+            position: absolute;
+            bottom: 40px; /* Ajustado para nova altura */
+            width: 60px;
+            height: 90px;
+            transition: all 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .character .visuals { position: relative; width: 50px; height: 70px; }
+        .character .head {
+            position: absolute; top: 0; left: 10px; width: 30px; height: 30px;
+            border-radius: 50%; background-color: #ffd6e3;
+        }
+        .character .body {
+            position: absolute; bottom: 0; left: 20px; width: 10px; height: 40px;
+        }
+        .character .hair {
+            position: absolute; top: -5px; left: 5px; width: 40px; height: 20px;
+            background-color: var(--brown); border-radius: 50% 50% 0 0;
+        }
+        .name-tag {
+            font-size: 0.75em;
+            font-weight: 600;
+            color: var(--white);
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 2px 6px;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+        /* Personagens Customizados */
+        #maria { left: 45%; } #maria .body { background-color: var(--primary-color); }
+        #mae { left: 25%; } #mae .body { background-color: #8e44ad; } #mae .hair { background-color: #333; height: 25px; border-radius: 40% 40% 20% 20%;}
+        #irmao { right: 25%; } #irmao .body { background-color: #2980b9; } #irmao .hair { width: 30px; height: 10px; top: 0; left: 10px; border-radius: 20px; }
+        
+        /* Personagens do Sonho */
+        .dream-char { animation: float 6s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        #riam { left: 5%; bottom: 120px; } #riam .body { background-color: #1abc9c; }
+        #samuel { left: 20%; bottom: 160px; } #samuel .body { background-color: #e74c3c; }
+        #cecilia { left: 35%; bottom: 140px; } #cecilia .body { background-color: #f1c40f; } #cecilia .hair { background-color: #c68642; }
+        #maluhelen { right: 35%; bottom: 150px; } #maluhelen .body { background-color: #9b59b6; } #maluhelen .hair { background-color: #e91e63; height: 30px; width: 30px; left: 10px; border-radius: 50%; }
+        #vitoria { right: 20%; bottom: 130px; } #vitoria .body { background-color: #3498db; }
+        #maira { right: 5%; bottom: 170px; filter: drop-shadow(0 0 10px white); } #maira .body { background-color: var(--white); } #maira .hair { background-color: #fdd835; }
+
+        .speech-bubble {
+            position: absolute;
+            bottom: 180px; background: var(--white);
+            padding: 12px 18px; border-radius: 15px;
+            border: 2px solid var(--primary-color);
+            font-weight: 600; text-align: center;
+            opacity: 0; transform: scale(0.8) translateY(20px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 240px; z-index: 10;
+        }
+        .speech-bubble.visible { opacity: 1; transform: scale(1) translateY(0); }
+        .speech-bubble::after { /* Seta apontando para baixo */
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid var(--primary-color);
+        }
+        .speech-bubble::before { /* Preenchimento da seta */
+             content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid var(--white);
+            margin-top: -1.5px;
+        }
+
+        .scene-element { position: absolute; opacity: 0; transition: opacity 0.5s; }
+        #table-element { bottom: 0; left: 50%; transform: translateX(-50%); width: 350px; height: 120px; background-color: var(--table-color); border-top: 10px solid #804020; }
+        .table-food { bottom: 120px; font-size: 30px; }
+        #cuscuz-food { left: 35%; } #acerola-food { left: 60%; }
+        #dream-sign { top: 20px; left: 50%; transform: translateX(-50%); color: var(--white); font-size: 1.5em; font-weight: bold; text-shadow: 2px 2px 4px #00000080; }
+        #party-banner { top: 30px; left: 50%; transform: translateX(-50%); font-size: 1.8em; color: var(--primary-color); font-weight: bold; text-shadow: 1px 1px 2px var(--white); }
+
+        #next-dialogue-btn { margin-top: 15px; }
+        
+        #head-button {
+            width: 150px; height: 150px; background: #ffd6e3;
+            border: 4px solid var(--primary-color); border-radius: 50%;
+            position: relative; cursor: pointer; margin: 20px auto;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        #head-button:hover { transform: scale(1.1); }
+        #head-button .hair {
+            content: ''; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+            width: 130px; height: 65px; background-color: var(--brown); border-radius: 70% 70% 20% 20%;
+        }
+
+        .photo-container { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        .photo { width: 250px; height: 250px; object-fit: cover; border: 4px solid var(--secondary-color); border-radius: 12px; }
+        #typing-text { font-size: 1.2em; color: #d1495b; margin-top: 30px; min-height: 40px; font-weight: 600; text-align: left; max-width: 600px; line-height: 1.6; }
+        
+        button {
+            padding: 12px 25px; background: var(--secondary-color); color: var(--white);
+            border: none; border-radius: 50px; cursor: pointer; font-weight: bold;
+            font-size: 1em; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        button:hover { background: var(--primary-color); transform: translateY(-3px); }
+        .hidden { display: none !important; }
+        canvas#confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 100; }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div id="start-screen" class="screen">
+        <h1>Uma Noite Surpresa</h1>
+        <p>Uma história para Maria</p>
+        <button id="start-story-btn">Começar</button>
+    </div>
+
+    <div id="cutscene-screen" class="screen hidden">
+        <div id="cutscene-container">
+            <!-- Backgrounds -->
+            <div id="scene-casa" class="scene-bg"></div>
+            <div id="scene-quarto" class="scene-bg"></div>
+            <div id="scene-sonho" class="scene-bg"></div>
+            <div id="scene-festa" class="scene-bg"></div>
+
+            <!-- Scene Elements -->
+            <div id="table-element" class="scene-element"><div id="cuscuz-food" class="table-food">🥣</div><div id="acerola-food" class="table-food">🍹</div></div>
+            <div id="dream-sign" class="scene-element">Bem-vinda ao Mundo dos Rescusos</div>
+            <div id="party-banner" class="scene-element">Parabéns, Maria Cabeçuda!</div>
+
+            <!-- Personagens -->
+            <div id="maria" class="character"><div class="visuals"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="name-tag">Maria</div></div>
+            <div id="mae" class="character"><div class="visuals"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="name-tag">Mãe</div></div>
+            <div id="irmao" class="character"><div class="visuals"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="name-tag">Irmão</div></div>
+            <div id="riam" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="name-tag">Riam</div></div>
+            <div id="samuel" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="name-tag">Samuel</div></div>
+            <div id="cecilia" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="name-tag">Cecília</div></div>
+            <div id="maluhelen" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="name-tag">Maluhelen</div></div>
+            <div id="vitoria" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="name-tag">Vitória</div></div>
+            <div id="maira" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="name-tag">Maira</div></div>
+
+            <!-- Balões de Fala -->
+            <div id="bubble" class="speech-bubble"></div>
+        </div>
+        <button id="next-dialogue-btn" class="hidden">Próximo →</button>
+    </div>
+
+    <div id="reward-screen" class="screen hidden">
+        <h2 id="reward-title"></h2>
+        <div id="head-button"><div class="hair"></div></div>
+    </div>
+
+    <div id="surprise-content" class="screen hidden">
+        <div id="typing-text"></div>
+        <div class="photo-container">
+            <img src="https://live.staticflickr.com/65535/54792947163_e94652cdbe_z.jpg" class="photo" alt="Malu, Riam e Maria" onerror="this.onerror=null;this.src='https://placehold.co/250x250/e63946/ffffff?text=Foto';">
+        </div>
+        <button id="restart-btn" style="margin-top: 20px;">Ver de novo</button>
+    </div>
+</div>
+
+<canvas id="confetti-canvas"></canvas>
+
+<script>
+    const screens = {
+        start: document.getElementById('start-screen'),
+        cutscene: document.getElementById('cutscene-screen'),
+        reward: document.getElementById('reward-screen'),
+        surprise: document.getElementById('surprise-content'),
+    };
+
+    const buttons = {
+        start: document.getElementById('start-story-btn'),
+        next: document.getElementById('next-dialogue-btn'),
+        head: document.getElementById('head-button'),
+        restart: document.getElementById('restart-btn'),
+    };
+    
+    const script = [
+        // CENA 1 – CHEGANDO EM CASA
+        { scene: 1, speaker: 'maria', text: "Que dia, viu... Quase dormi na aula de Filosofia. E a prova de Química? Um desastre." },
+        { scene: 1, speaker: 'mae', text: "Minha filha, deixa isso pra lá. Vem jantar, preparei um cuscuz com tudo que tu gosta." },
+        { scene: 1, speaker: 'maria', text: "Sério mesmo?! Tem aquele suquinho de acerola?" },
+        { scene: 1, speaker: 'mae', text: "Claro. E café passado na hora, viu?" },
+        { scene: 1, speaker: 'irmao', text: "Só cuidado pra cabeça dela não bater na mesa. Vai que quebra!" },
+        { scene: 1, speaker: 'maria', text: "Vai cuidar da tua careca, que tá refletindo a luz da lâmpada já." },
+        { scene: 1, speaker: 'irmao', text: "Pelo menos minha cabeça cabe numa foto 3x4, né?" },
+        { scene: 1, speaker: 'mae', text: "Vocês parecem que vivem de stand-up. Sentem e comam logo." },
+        // CENA 2 – JANTAR EM FAMÍLIA (mesmo cenário visual)
+        { scene: 1, speaker: 'maria', text: "Hoje a Cecília derrubou um estojo inteiro. A professora só olhou com aquela cara dela..." },
+        { scene: 1, speaker: 'irmao', text: "Aposto que você riu igual uma foca." },
+        { scene: 1, speaker: 'maria', text: "Óbvio. E a Maluhelen me emprestou uma caneta cheirosa de morango. Achei chique." },
+        { scene: 1, speaker: 'mae', text: "E como tá a professora Maira? Ela falou contigo hoje?" },
+        { scene: 1, speaker: 'maria', text: "Falou sim. Disse que eu tava mais focada. Acho que ela gosta de mim de verdade." },
+        { scene: 1, speaker: 'irmao', text: "Ela gosta da tua cabeça, isso sim. Cabe todo o conteúdo da aula." },
+        { scene: 1, speaker: 'mae', text: "Terminou, minha filha? Vai tomar teu banho pra descansar." },
+        // CENA 3 – QUARTO DA MARIA / BANHO
+        { scene: 2, text: "(Maria vai para o quarto... tomar um banho e descansar...)" },
+        // CENA 4 – INÍCIO DO SONHO
+        { scene: 3, speaker: 'maria', text: "Oxe... onde é que eu tô? Isso é um sonho?" },
+        { scene: 3, speaker: 'riam', text: "Bem-vinda ao seu próprio sonho, cabeçuda! A gente invadiu sua mente." },
+        { scene: 3, speaker: 'samuel', text: "Você achou mesmo que a gente ia deixar passar o seu aniversário assim?" },
+        { scene: 3, speaker: 'cecilia', text: "A gente te ama, Maria. E também ama rir de você. (risos)" },
+        { scene: 3, speaker: 'maluhelen', text: "E lembra da caneta cheirosa? Pois é, esse sonho também tem cheiro de morango!" },
+        { scene: 3, speaker: 'vitoria', text: "Você sempre ilumina nossos dias, mesmo quando tenta esconder com sarcasmo." },
+        { scene: 3, speaker: 'maira', text: "Maria... você tem um brilho que não pode ser ignorado. Você me inspira." },
+        { scene: 3, speaker: 'maria', text: "Eu não acredito... vocês fizeram isso tudo... por mim?" },
+        { scene: 3, speaker: 'riam', text: "E nem começou, visse? Isso aqui é só a versão beta. Espera até ver o presente." },
+        // CENA 5 – A FESTA DOS SONHOS
+        { scene: 4, speaker: 'riam', text: "Agora... clica ali naquele botão… e estoura essa cabeça gigante!" },
+    ];
+
+    let scriptIndex = 0;
+    let currentScene = 0;
+
+    function showScreen(screenName) {
+        Object.values(screens).forEach(s => s.classList.add('hidden'));
+        screens[screenName].classList.remove('hidden');
+    }
+
+    function setupScene(sceneId) {
+        if (currentScene === sceneId) return;
+        currentScene = sceneId;
+
+        document.querySelectorAll('.scene-bg').forEach(bg => bg.classList.remove('active'));
+        document.querySelectorAll('.scene-element').forEach(el => el.style.opacity = '0');
+        document.querySelectorAll('.character').forEach(ch => ch.classList.add('hidden'));
+
+        if (sceneId === 1) { // Casa
+            document.getElementById('scene-casa').classList.add('active');
+            document.getElementById('table-element').style.opacity = '1';
+            ['maria', 'mae', 'irmao'].forEach(id => document.getElementById(id).classList.remove('hidden'));
+        } else if (sceneId === 2) { // Quarto
+            document.getElementById('scene-quarto').classList.add('active');
+        } else if (sceneId === 3) { // Sonho
+            document.getElementById('scene-sonho').classList.add('active');
+            document.getElementById('dream-sign').style.opacity = '1';
+            ['maria', 'riam', 'samuel', 'cecilia', 'maluhelen', 'vitoria', 'maira'].forEach(id => document.getElementById(id).classList.remove('hidden'));
+        } else if (sceneId === 4) { // Festa
+             document.getElementById('scene-festa').classList.add('active');
+             document.getElementById('party-banner').style.opacity = '1';
+             ['maria', 'riam', 'samuel', 'cecilia', 'maluhelen', 'vitoria', 'maira'].forEach(id => document.getElementById(id).classList.remove('hidden'));
+        }
+    }
+    
+    function updateDialogue() {
+        const line = script[scriptIndex];
+        if (!line) {
+            buttons.next.classList.add('hidden');
+            document.getElementById('reward-title').innerText = "Estoure a Cabeça!";
+            showScreen('reward');
+            return;
+        }
+
+        setupScene(line.scene);
+        const bubble = document.getElementById('bubble');
+        bubble.classList.remove('visible');
+
+        setTimeout(() => {
+            const container = document.getElementById('cutscene-container');
+            const containerRect = container.getBoundingClientRect();
+            
+            bubble.innerText = line.text;
+            
+            if (line.speaker) {
+                const speakerEl = document.getElementById(line.speaker);
+                const speakerRect = speakerEl.getBoundingClientRect();
+                
+                // Posição inicial (centralizado no personagem)
+                let bubbleLeft = (speakerRect.left + speakerRect.width / 2) - containerRect.left;
+                bubble.style.left = `${bubbleLeft}px`;
+                bubble.style.transform = 'translateX(-50%)';
+
+            } else { // Narração centralizada
+                bubble.style.left = '50%';
+                bubble.style.transform = 'translateX(-50%)';
+            }
+            
+            // Força o navegador a recalcular o layout para evitar overflow
+             requestAnimationFrame(() => {
+                const bubbleRect = bubble.getBoundingClientRect();
+                if (bubbleRect.left < containerRect.left) {
+                    bubble.style.left = '10px';
+                    bubble.style.transform = 'translateX(0)';
+                } else if (bubbleRect.right > containerRect.right) {
+                    bubble.style.left = `${containerRect.width - bubble.offsetWidth - 10}px`;
+                    bubble.style.transform = 'translateX(0)';
+                }
+                 bubble.classList.add('visible');
+             });
+
+            scriptIndex++;
+        }, 100);
+    }
+    
+    function startStory() {
+        scriptIndex = 0;
+        currentScene = 0;
+        showScreen('cutscene');
+        buttons.next.classList.remove('hidden');
+        updateDialogue();
+    }
+    
+    function showFinalSurprise() {
+        showScreen('surprise');
+        document.body.style.background = 'var(--white)';
+        const text = `Feliz aniversário, Maria Cabeçuda!\n\nEspero que você tenha uma ótima vida pela frente, sempre alegrando nossos dias com esse sorriso contagiante.\n\nSabemos que você irá conquistar tudo o que quiser, pois você é uma garota esforçada, simpática e inteligente.\n\nQue cada sonho seu se torne realidade, que você continue inspirando todos ao seu redor, e que nunca falte alegria, amor e amizade verdadeira na sua vida.\n\nNão sei para você, mas conhecer você me ajudou muito e me fez perceber como pessoas especiais como você fazem a diferença no mundo.\n\nObrigado por existir e por permitir que a gente faça parte da sua história. ❤️\n– O certo é “recursos” e não “rescusos”. – Riam Miguel`;
+        const typingText = document.getElementById('typing-text');
+        
+        // Substitui quebras de linha por <br> para HTML
+        const formattedText = text.replace(/\n/g, '<br>');
+        let j = 0;
+        typingText.innerHTML = '';
+        
+        function typeWriter() {
+            if (j < formattedText.length) {
+                if (formattedText.substring(j, j + 4) === '<br>') {
+                    typingText.innerHTML += '<br>';
+                    j += 4;
+                } else {
+                    typingText.innerHTML += formattedText.charAt(j);
+                    j++;
+                }
+                setTimeout(typeWriter, 30);
+            }
+        }
+        typeWriter();
+
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let particles = [];
+        const colors = ["#e63946", "#ff8fa3", "#ffb3c1"];
+        for(let i=0; i<200; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                size: Math.random() * 10 + 5,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                velocity: { x: Math.random() * 4 - 2, y: Math.random() * 5 + 2 }
+            });
+        }
+        function animateConfetti() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p, i) => {
+                p.y += p.velocity.y;
+                p.x += p.velocity.x;
+                ctx.fillStyle = p.color;
+                ctx.fillRect(p.x, p.y, p.size, p.size);
+                if (p.y > canvas.height + 20) particles.splice(i, 1);
+            });
+            if (particles.length > 0) requestAnimationFrame(animateConfetti);
+        }
+        animateConfetti();
+    }
+
+    buttons.start.addEventListener('click', startStory);
+    buttons.next.addEventListener('click', updateDialogue);
+    buttons.head.addEventListener('click', showFinalSurprise);
+    buttons.restart.addEventListener('click', () => {
+        showScreen('start');
+        document.body.style.background = `linear-gradient(135deg, var(--background-start), var(--background-end))`;
+    });
+
+</script>
+</body>
+</html>
+
