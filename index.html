@@ -131,11 +131,17 @@
             background: var(--white);
             padding: 12px 18px; border-radius: 15px;
             border: 2px solid var(--primary-color);
-            font-weight: 600; text-align: center;
+            font-weight: 600; text-align: left; /* Alterado */
             opacity: 0; transform: scale(0.8) translateY(20px);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             max-width: 280px; /* Aumentado */
             z-index: 10;
+        }
+        .speech-bubble .speaker-name {
+            display: block;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
         }
         .speech-bubble.visible { opacity: 1; transform: scale(1) translateY(0); }
         .speech-bubble::after { /* Seta apontando para baixo */
@@ -222,9 +228,9 @@
             #irmao { right: 5%; }
 
             .speech-bubble {
-                max-width: 200px;
+                max-width: 90vw;
                 font-size: 0.85em;
-                padding: 8px 12px;
+                padding: 10px 15px;
                 bottom: initial;
                 top: 15px; /* Coloca o balão no topo para não cobrir os personagens */
             }
@@ -233,12 +239,14 @@
             }
 
             .dream-char { animation: none; } /* Remove animação de flutuar para performance */
-            #riam { left: 2%; bottom: 100px; }
-            #samuel { left: 22%; bottom: 130px; }
-            #cecilia { left: 42%; bottom: 110px; }
-            #maluhelen { right: 42%; bottom: 120px; }
-            #vitoria { right: 22%; bottom: 100px; }
-            #maira { right: 2%; bottom: 140px; }
+            
+            /* Nova posição dos personagens no sonho */
+            #riam { left: 5%; bottom: 180px; }
+            #samuel { left: 25%; bottom: 130px; }
+            #vitoria { left: 40%; bottom: 80px; }
+            #cecilia { right: 40%; bottom: 80px; }
+            #maluhelen { right: 25%; bottom: 130px; }
+            #maira { right: 5%; bottom: 180px; filter: drop-shadow(0 0 5px white); }
             
             #table-element { width: 100%; height: 100px; }
             .table-food { bottom: 100px; }
@@ -356,7 +364,7 @@
         { scene: 3, speaker: 'maira', text: "Maria... você tem um brilho que não pode ser ignorado. Você me inspira." },
         { scene: 3, speaker: 'maria', text: "Eu não acredito... vocês fizeram isso tudo... por mim?" },
         { scene: 3, speaker: 'riam', text: "E nem começou, visse? Isso aqui é só a versão beta. Espera até ver o presente." },
-        // CENA 5 – A FESTA DOS SONHOS
+        // CENA 5 – A FESTA DOS SONHO
         { scene: 4, speaker: 'riam', text: "Agora... clica ali naquele botão… e estoura essa cabeça gigante!" },
     ];
 
@@ -409,9 +417,17 @@
         setTimeout(() => {
             const container = document.getElementById('cutscene-container');
             const containerPadding = 15;
+            
+            // Adiciona o nome do personagem ao balão
+            if (line.speaker) {
+                const speakerEl = document.getElementById(line.speaker);
+                const speakerName = speakerEl.querySelector('.name-tag').innerText;
+                bubble.innerHTML = `<strong class="speaker-name">${speakerName}</strong><span>${line.text}</span>`;
+            } else {
+                bubble.innerHTML = `<span>${line.text}</span>`; // Para narração sem nome
+            }
 
-            bubble.innerText = line.text;
-            bubble.style.transform = 'translateX(0)'; // Reset transform
+            bubble.style.transform = 'translateX(0)';
 
             if (line.speaker) {
                 const speakerEl = document.getElementById(line.speaker);
@@ -428,7 +444,7 @@
                     bubble.style.left = '50%';
                     bubble.style.transform = 'translateX(-50%)';
                 } else {
-                     // Boundary checks to prevent overflow
+                     // Boundary checks para não sair da tela
                     if (bubbleLeft < containerPadding) {
                         bubbleLeft = containerPadding;
                     }
