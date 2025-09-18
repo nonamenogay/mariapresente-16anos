@@ -37,13 +37,13 @@
 
         .main-container {
             width: 100%;
-            max-width: 960px; /* Aumentado */
+            max-width: 960px;
             text-align: center;
         }
         
         .screen {
             width: 100%;
-            max-width: 960px; /* Aumentado */
+            max-width: 960px;
             padding: 20px;
             animation: fadeIn 0.5s ease-in-out;
         }
@@ -55,7 +55,7 @@
 
         #cutscene-container {
             position: relative;
-            height: 500px; /* Aumentado */
+            height: 500px;
             border: 4px solid var(--secondary-color);
             border-radius: 12px;
             overflow: hidden;
@@ -74,27 +74,43 @@
         .scene-bg.active { opacity: 1; }
 
         #scene-casa { background-color: #faf0e6; }
-        #scene-quarto { background-color: #e0d8f0; } /* Roxo claro */
+        #scene-quarto { background-color: #e0d8f0; }
         #scene-sonho { background: linear-gradient(135deg, var(--dream-bg-start), var(--dream-bg-end)); }
         #scene-festa { background: linear-gradient(135deg, #a2d2ff, #ffc8dd); }
 
         .character {
             position: absolute;
             bottom: 40px;
-            width: 80px; /* Aumentado */
-            height: 110px; /* Aumentado */
+            width: 80px;
+            height: 110px;
             transition: all 0.5s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
+            transition: transform 0.3s ease, filter 0.3s ease; /* Transição para o highlight */
         }
         .character .visuals { position: relative; width: 60px; height: 90px; }
         .character .head {
             position: absolute; top: 0; left: 15px; width: 30px; height: 30px;
             border-radius: 50%; background-color: #ffd6e3;
         }
+        .eye {
+            position: absolute;
+            width: 4px; height: 5px;
+            background-color: #333;
+            border-radius: 50%;
+            top: 12px;
+            animation: blink 5s infinite;
+        }
+        .eye.left { left: 8px; }
+        .eye.right { right: 20px; }
+        @keyframes blink {
+            0%, 95%, 100% { transform: scaleY(1); }
+            97% { transform: scaleY(0.1); }
+        }
+
         .character .body {
-            position: absolute; bottom: 0; left: 25px; width: 10px; height: 60px; /* Aumentado */
+            position: absolute; bottom: 0; left: 25px; width: 10px; height: 60px;
         }
         .character .hair {
             position: absolute; top: -5px; left: 10px; width: 40px; height: 20px;
@@ -115,7 +131,6 @@
         #mae { left: 20%; } #mae .body { background-color: #8e44ad; } #mae .hair { background-color: #333; height: 25px; border-radius: 40% 40% 20% 20%;}
         #irmao { right: 20%; } #irmao .body { background-color: #2980b9; } #irmao .hair { width: 30px; height: 10px; top: 0; left: 15px; border-radius: 20px; }
         
-        /* Personagens do Sonho */
         .dream-char { animation: float 6s ease-in-out infinite; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
         #riam { left: 5%; bottom: 150px; } #riam .body { background-color: #1abc9c; }
@@ -126,46 +141,28 @@
         #maira { right: 5%; bottom: 200px; filter: drop-shadow(0 0 10px white); } #maira .body { background-color: var(--white); } #maira .hair { background-color: #fdd835; }
 
         .speech-bubble {
-            position: absolute;
-            bottom: 220px; /* Aumentado */
-            background: var(--white);
-            padding: 12px 18px; border-radius: 15px;
-            border: 2px solid var(--primary-color);
-            font-weight: 600; text-align: left; /* Alterado */
+            position: absolute; bottom: 220px;
+            background: var(--white); padding: 12px 18px; border-radius: 15px;
+            border: 2px solid var(--primary-color); font-weight: 600; text-align: left;
             opacity: 0; transform: scale(0.8) translateY(20px);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            max-width: 280px; /* Aumentado */
-            z-index: 10;
+            max-width: 280px; z-index: 10;
         }
         .speech-bubble .speaker-name {
-            display: block;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 5px;
+            display: block; font-weight: 700; color: var(--primary-color); margin-bottom: 5px;
         }
         .speech-bubble.visible { opacity: 1; transform: scale(1) translateY(0); }
-        .speech-bubble::after { /* Seta apontando para baixo */
-            content: '';
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0; height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
+        .speech-bubble::after {
+            content: ''; position: absolute; top: 100%; left: 50%;
+            transform: translateX(-50%); width: 0; height: 0;
+            border-left: 10px solid transparent; border-right: 10px solid transparent;
             border-top: 10px solid var(--primary-color);
         }
-        .speech-bubble::before { /* Preenchimento da seta */
-             content: '';
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0; height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 8px solid var(--white);
-            margin-top: -1.5px;
+        .speech-bubble::before {
+             content: ''; position: absolute; top: 100%; left: 50%;
+            transform: translateX(-50%); width: 0; height: 0;
+            border-left: 8px solid transparent; border-right: 8px solid transparent;
+            border-top: 8px solid var(--white); margin-top: -1.5px;
         }
 
         .scene-element { position: absolute; opacity: 0; transition: opacity 0.5s; }
@@ -174,6 +171,13 @@
         #cuscuz-food { left: 35%; } #acerola-food { left: 60%; }
         #dream-sign { top: 20px; left: 50%; transform: translateX(-50%); color: var(--white); font-size: 1.5em; font-weight: bold; text-shadow: 2px 2px 4px #00000080; }
         #party-banner { top: 30px; left: 50%; transform: translateX(-50%); font-size: 1.8em; color: var(--primary-color); font-weight: bold; text-shadow: 1px 1px 2px var(--white); }
+        #skz-poster {
+            width: 60px; height: 90px; background-color: #ffafcc;
+            border: 2px solid #333; top: 120px; left: 100px;
+            transform: rotate(-5deg); display: flex; align-items: center; justify-content: center;
+            font-size: 0.8em; font-weight: bold; color: #333;
+        }
+        #skz-poster::after { content: "SKZ"; }
 
         #next-dialogue-btn { margin-top: 15px; }
         
@@ -184,12 +188,21 @@
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         #head-button:hover { transform: scale(1.1); }
+        #head-button.exploding { animation: head-explode 1s forwards ease-in-out; }
+        @keyframes head-explode {
+            0% { transform: scale(1); }
+            20% { transform: scale(1.1) rotate(5deg); }
+            40% { transform: scale(0.9) rotate(-5deg); }
+            60% { transform: scale(1.2) rotate(10deg); }
+            80% { transform: scale(1.5); }
+            100% { transform: scale(3); opacity: 0; }
+        }
         #head-button .hair {
             content: ''; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
             width: 130px; height: 65px; background-color: var(--brown); border-radius: 70% 70% 20% 20%;
         }
 
-        .photo-container { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+        .photo-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-top: 20px; }
         .photo { width: 250px; height: 250px; object-fit: cover; border: 4px solid var(--secondary-color); border-radius: 12px; }
         #typing-text { font-size: 1.2em; color: #d1495b; margin-top: 30px; min-height: 40px; font-weight: 600; text-align: left; max-width: 700px; line-height: 1.6; margin: 30px auto 0 auto; }
         
@@ -205,63 +218,47 @@
 
         /* ESTILOS PARA CELULAR (RESPONSIVO) */
         @media (max-width: 768px) {
-            .main-container, .screen {
-                padding: 10px;
+            .main-container, .screen { padding: 10px; }
+            #cutscene-container { height: 70vh; }
+            .character { width: 50px; height: 80px; bottom: 20px; }
+            .character .visuals { width: 50px; height: 70px; }
+            .character .body { height: 40px; left: 20px; }
+            .character .hair { left: 5px; }
+            .eye { width: 3px; height: 4px; top: 10px; }
+            .eye.left { left: 7px; } .eye.right { right: 7px; }
+            #irmao .hair { left: 10px; }
+            #maluhelen .hair { left: 10px; }
+            .character.speaking { /* Highlight para o personagem que fala no celular */
+                transform: scale(1.15);
+                filter: drop-shadow(0 0 8px var(--white));
             }
-            #cutscene-container {
-                height: 70vh; /* Usa a altura da tela */
-            }
-            .character {
-                width: 50px;
-                height: 80px;
-                bottom: 20px;
-            }
-             .character .visuals { width: 50px; height: 70px; }
-             .character .body { height: 40px; left: 20px; }
-             .character .hair { left: 5px; }
-             #irmao .hair { left: 10px; }
-             #maluhelen .hair { left: 10px; }
-
             .name-tag { font-size: 0.7em; }
-            
             #mae { left: 5%; }
             #irmao { right: 5%; }
 
             .speech-bubble {
-                max-width: 90vw;
-                font-size: 0.85em;
-                padding: 10px 15px;
-                bottom: initial;
-                top: 15px; /* Coloca o balão no topo para não cobrir os personagens */
+                max-width: 95vw; font-size: 0.85em; padding: 10px 15px;
+                bottom: initial; top: 15px;
             }
-            .speech-bubble::after, .speech-bubble::before {
-                display: none; /* Esconde a seta no celular para simplificar */
-            }
-
-            .dream-char { animation: none; } /* Remove animação de flutuar para performance */
+            .speech-bubble::after, .speech-bubble::before { display: none; }
+            .dream-char { animation: none; }
             
-            /* Nova posição dos personagens no sonho */
-            #riam { left: 5%; bottom: 180px; }
-            #samuel { left: 25%; bottom: 130px; }
-            #vitoria { left: 40%; bottom: 80px; }
-            #cecilia { right: 40%; bottom: 80px; }
-            #maluhelen { right: 25%; bottom: 130px; }
-            #maira { right: 5%; bottom: 180px; filter: drop-shadow(0 0 5px white); }
+            /* Nova posição dos personagens no sonho (CELULAR) */
+            #maria.in-dream { bottom: 30px; }
+            #riam.in-dream { left: 5%; bottom: 250px; }
+            #samuel.in-dream { right: 5%; bottom: 250px; }
+            #cecilia.in-dream { left: 15%; bottom: 180px; }
+            #maluhelen.in-dream { right: 15%; bottom: 180px; }
+            #vitoria.in-dream { left: 25%; bottom: 110px; }
+            #maira.in-dream { right: 25%; bottom: 110px; }
             
             #table-element { width: 100%; height: 100px; }
             .table-food { bottom: 100px; }
-            
-            .photo {
-                width: 200px;
-                height: 200px;
-            }
-            #typing-text {
-                font-size: 1em;
-                max-width: 90vw;
-            }
+            #skz-poster { left: 20px; top: 100px; }
+            .photo { width: 200px; height: 200px; }
+            #typing-text { font-size: 1em; max-width: 90vw; }
             h1 { font-size: 1.8em; }
         }
-
     </style>
 </head>
 <body>
@@ -275,29 +272,26 @@
 
     <div id="cutscene-screen" class="screen hidden">
         <div id="cutscene-container">
-            <!-- Backgrounds -->
             <div id="scene-casa" class="scene-bg"></div>
             <div id="scene-quarto" class="scene-bg"></div>
             <div id="scene-sonho" class="scene-bg"></div>
             <div id="scene-festa" class="scene-bg"></div>
 
-            <!-- Scene Elements -->
             <div id="table-element" class="scene-element"><div id="cuscuz-food" class="table-food">🥣</div><div id="acerola-food" class="table-food">🍹</div></div>
+            <div id="skz-poster" class="scene-element"></div>
             <div id="dream-sign" class="scene-element">Bem-vinda ao Mundo dos Rescusos</div>
             <div id="party-banner" class="scene-element">Parabéns, Maria Cabeçuda!</div>
 
-            <!-- Personagens -->
-            <div id="maria" class="character"><div class="visuals"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="name-tag">Maria</div></div>
-            <div id="mae" class="character"><div class="visuals"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="name-tag">Mãe</div></div>
-            <div id="irmao" class="character"><div class="visuals"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="name-tag">Irmão</div></div>
-            <div id="riam" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="name-tag">Riam</div></div>
-            <div id="samuel" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="name-tag">Samuel</div></div>
-            <div id="cecilia" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="name-tag">Cecília</div></div>
-            <div id="maluhelen" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="name-tag">Maluhelen</div></div>
-            <div id="vitoria" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="name-tag">Vitória</div></div>
-            <div id="maira" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="name-tag">Maira</div></div>
+            <div id="maria" class="character"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Maria</div></div>
+            <div id="mae" class="character"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Mãe</div></div>
+            <div id="irmao" class="character"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Irmão</div></div>
+            <div id="riam" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Riam</div></div>
+            <div id="samuel" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Samuel</div></div>
+            <div id="cecilia" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Cecília</div></div>
+            <div id="maluhelen" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Maluhelen</div></div>
+            <div id="vitoria" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Vitória</div></div>
+            <div id="maira" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Maira</div></div>
 
-            <!-- Balões de Fala -->
             <div id="bubble" class="speech-bubble"></div>
         </div>
         <button id="next-dialogue-btn" class="hidden">Próximo →</button>
@@ -312,6 +306,7 @@
         <div id="typing-text"></div>
         <div class="photo-container">
             <img src="https://live.staticflickr.com/65535/54792947163_e94652cdbe_z.jpg" class="photo" alt="Malu, Riam e Maria" onerror="this.onerror=null;this.src='https://placehold.co/250x250/e63946/ffffff?text=Foto';">
+            <img src="https://live.staticflickr.com/65535/54795313213_c8b20e0577_z.jpg" class="photo" alt="Maria e Cecília" onerror="this.onerror=null;this.src='https://placehold.co/250x250/e63946/ffffff?text=Foto';">
         </div>
         <button id="restart-btn" style="margin-top: 20px;">Ver de novo</button>
     </div>
@@ -335,7 +330,6 @@
     };
     
     const script = [
-        // CENA 1 – CHEGANDO EM CASA
         { scene: 1, speaker: 'maria', text: "Que dia, viu... Quase dormi na aula de Filosofia. E a prova de Química? Um desastre." },
         { scene: 1, speaker: 'mae', text: "Minha filha, deixa isso pra lá. Vem jantar, preparei um cuscuz com tudo que tu gosta." },
         { scene: 1, speaker: 'maria', text: "Sério mesmo?! Tem aquele suquinho de acerola?" },
@@ -344,17 +338,17 @@
         { scene: 1, speaker: 'maria', text: "Vai cuidar da tua careca, que tá refletindo a luz da lâmpada já." },
         { scene: 1, speaker: 'irmao', text: "Pelo menos minha cabeça cabe numa foto 3x4, né?" },
         { scene: 1, speaker: 'mae', text: "Vocês parecem que vivem de stand-up. Sentem e comam logo." },
-        // CENA 2 – JANTAR EM FAMÍLIA (mesmo cenário visual)
         { scene: 1, speaker: 'maria', text: "Hoje a Cecília derrubou um estojo inteiro. A professora só olhou com aquela cara dela..." },
         { scene: 1, speaker: 'irmao', text: "Aposto que você riu igual uma foca." },
         { scene: 1, speaker: 'maria', text: "Óbvio. E a Maluhelen me emprestou uma caneta cheirosa de morango. Achei chique." },
         { scene: 1, speaker: 'mae', text: "E como tá a professora Maira? Ela falou contigo hoje?" },
         { scene: 1, speaker: 'maria', text: "Falou sim. Disse que eu tava mais focada. Acho que ela gosta de mim de verdade." },
         { scene: 1, speaker: 'irmao', text: "Ela gosta da tua cabeça, isso sim. Cabe todo o conteúdo da aula." },
-        { scene: 1, speaker: 'mae', text: "Terminou, minha filha? Vai tomar teu banho pra descansar." },
-        // CENA 3 – QUARTO DA MARIA / BANHO
+        { scene: 1, speaker: 'mae', text: "Filha... sei que às vezes sou dura com você, que pego no seu pé..." },
+        { scene: 1, speaker: 'mae', text: "Mas é porque te amo tanto e me preocupo. Só quero que você se torne uma grande mulher, a mulher incrível que sei que você pode ser." },
+        { scene: 1, speaker: 'maria', text: "Eu sei, mãe. Às vezes fico com raiva, mas... eu entendo. Também te amo muito, mais que tudo." },
+        { scene: 1, speaker: 'mae', text: "Terminou? Agora vai tomar teu banho pra descansar." },
         { scene: 2, text: "(Maria vai para o quarto... tomar um banho e descansar...)" },
-        // CENA 4 – INÍCIO DO SONHO
         { scene: 3, speaker: 'maria', text: "Oxe... onde é que eu tô? Isso é um sonho?" },
         { scene: 3, speaker: 'riam', text: "Bem-vinda ao seu próprio sonho, cabeçuda! A gente invadiu sua mente." },
         { scene: 3, speaker: 'samuel', text: "Você achou mesmo que a gente ia deixar passar o seu aniversário assim?" },
@@ -363,8 +357,8 @@
         { scene: 3, speaker: 'vitoria', text: "Você sempre ilumina nossos dias, mesmo quando tenta esconder com sarcasmo." },
         { scene: 3, speaker: 'maira', text: "Maria... você tem um brilho que não pode ser ignorado. Você me inspira." },
         { scene: 3, speaker: 'maria', text: "Eu não acredito... vocês fizeram isso tudo... por mim?" },
+        { scene: 3, speaker: 'riam', text: "Por você a gente faz qualquer coisa. Você não tem ideia do quanto sua amizade é importante pra mim e pra todo mundo aqui." },
         { scene: 3, speaker: 'riam', text: "E nem começou, visse? Isso aqui é só a versão beta. Espera até ver o presente." },
-        // CENA 5 – A FESTA DOS SONHO
         { scene: 4, speaker: 'riam', text: "Agora... clica ali naquele botão… e estoura essa cabeça gigante!" },
     ];
 
@@ -382,7 +376,11 @@
 
         document.querySelectorAll('.scene-bg').forEach(bg => bg.classList.remove('active'));
         document.querySelectorAll('.scene-element').forEach(el => el.style.opacity = '0');
-        document.querySelectorAll('.character').forEach(ch => ch.classList.add('hidden'));
+        document.querySelectorAll('.character').forEach(ch => {
+            ch.classList.add('hidden');
+            ch.classList.remove('in-dream'); // Limpa a classe de posicionamento mobile
+        });
+
 
         if (sceneId === 1) { // Casa
             document.getElementById('scene-casa').classList.add('active');
@@ -390,18 +388,26 @@
             ['maria', 'mae', 'irmao'].forEach(id => document.getElementById(id).classList.remove('hidden'));
         } else if (sceneId === 2) { // Quarto
             document.getElementById('scene-quarto').classList.add('active');
-        } else if (sceneId === 3) { // Sonho
-            document.getElementById('scene-sonho').classList.add('active');
-            document.getElementById('dream-sign').style.opacity = '1';
-            ['maria', 'riam', 'samuel', 'cecilia', 'maluhelen', 'vitoria', 'maira'].forEach(id => document.getElementById(id).classList.remove('hidden'));
-        } else if (sceneId === 4) { // Festa
-             document.getElementById('scene-festa').classList.add('active');
-             document.getElementById('party-banner').style.opacity = '1';
-             ['maria', 'riam', 'samuel', 'cecilia', 'maluhelen', 'vitoria', 'maira'].forEach(id => document.getElementById(id).classList.remove('hidden'));
+            document.getElementById('skz-poster').style.opacity = '1';
+            document.getElementById('maria').classList.remove('hidden'); // Maria precisa estar no quarto
+        } else if (sceneId === 3 || sceneId === 4) { // Sonho e Festa
+            const sceneName = sceneId === 3 ? 'sonho' : 'festa';
+            const elementName = sceneId === 3 ? 'dream-sign' : 'party-banner';
+            document.getElementById(`scene-${sceneName}`).classList.add('active');
+            document.getElementById(elementName).style.opacity = '1';
+            const dreamChars = ['maria', 'riam', 'samuel', 'cecilia', 'maluhelen', 'vitoria', 'maira'];
+            dreamChars.forEach(id => {
+                const el = document.getElementById(id);
+                el.classList.remove('hidden');
+                el.classList.add('in-dream'); // Adiciona classe para posicionamento mobile
+            });
         }
     }
     
     function updateDialogue() {
+        // Remove highlight do personagem anterior
+        document.querySelectorAll('.character').forEach(ch => ch.classList.remove('speaking'));
+
         const line = script[scriptIndex];
         if (!line) {
             buttons.next.classList.add('hidden');
@@ -418,43 +424,34 @@
             const container = document.getElementById('cutscene-container');
             const containerPadding = 15;
             
-            // Adiciona o nome do personagem ao balão
             if (line.speaker) {
                 const speakerEl = document.getElementById(line.speaker);
                 const speakerName = speakerEl.querySelector('.name-tag').innerText;
                 bubble.innerHTML = `<strong class="speaker-name">${speakerName}</strong><span>${line.text}</span>`;
+                if(window.innerWidth <= 768) { // Adiciona highlight no mobile
+                    speakerEl.classList.add('speaking');
+                }
             } else {
-                bubble.innerHTML = `<span>${line.text}</span>`; // Para narração sem nome
+                bubble.innerHTML = `<span>${line.text}</span>`;
             }
 
             bubble.style.transform = 'translateX(0)';
 
-            if (line.speaker) {
+            if (line.speaker && window.innerWidth > 768) { // Apenas posiciona o balão no desktop
                 const speakerEl = document.getElementById(line.speaker);
                 const speakerRect = speakerEl.getBoundingClientRect();
                 const containerRect = container.getBoundingClientRect();
                 
                 const speakerCenter = speakerRect.left + speakerRect.width / 2;
                 const bubbleWidth = bubble.offsetWidth;
-
                 let bubbleLeft = (speakerCenter - containerRect.left) - (bubbleWidth / 2);
 
-                if (window.innerWidth <= 768) {
-                    // No celular, o balão fica centralizado no topo
-                    bubble.style.left = '50%';
-                    bubble.style.transform = 'translateX(-50%)';
-                } else {
-                     // Boundary checks para não sair da tela
-                    if (bubbleLeft < containerPadding) {
-                        bubbleLeft = containerPadding;
-                    }
-                    if (bubbleLeft + bubbleWidth > container.offsetWidth - containerPadding) {
-                        bubbleLeft = container.offsetWidth - bubbleWidth - containerPadding;
-                    }
-                    bubble.style.left = `${bubbleLeft}px`;
+                if (bubbleLeft < containerPadding) bubbleLeft = containerPadding;
+                if (bubbleLeft + bubbleWidth > container.offsetWidth - containerPadding) {
+                    bubbleLeft = container.offsetWidth - bubbleWidth - containerPadding;
                 }
-
-            } else { // Narração centralizada
+                bubble.style.left = `${bubbleLeft}px`;
+            } else { // Centraliza no celular ou para narração
                 bubble.style.left = '50%';
                 bubble.style.transform = 'translateX(-50%)';
             }
@@ -473,56 +470,65 @@
     }
     
     function showFinalSurprise() {
-        showScreen('surprise');
-        document.body.style.background = 'var(--white)';
-        const text = `Feliz aniversário, Maria Cabeçuda!\n\nEspero que você tenha uma ótima vida pela frente, sempre alegrando nossos dias com esse sorriso contagiante.\n\nSabemos que você irá conquistar tudo o que quiser, pois você é uma garota esforçada, simpática e inteligente.\n\nQue cada sonho seu se torne realidade, que você continue inspirando todos ao seu redor, e que nunca falte alegria, amor e amizade verdadeira na sua vida.\n\nNão sei para você, mas conhecer você me ajudou muito e me fez perceber como pessoas especiais como você fazem a diferença no mundo.\n\nObrigado por existir e por permitir que a gente faça parte da sua história. ❤️\n– O certo é “recursos” e não “rescusos”. – Riam Miguel`;
-        const typingText = document.getElementById('typing-text');
+        buttons.head.classList.add('exploding');
         
-        const formattedText = text.replace(/\n/g, '<br>');
-        let j = 0;
-        typingText.innerHTML = '';
-        
-        function typeWriter() {
-            if (j < formattedText.length) {
-                if (formattedText.substring(j, j + 4) === '<br>') {
-                    typingText.innerHTML += '<br>';
-                    j += 4;
-                } else {
-                    typingText.innerHTML += formattedText.charAt(j);
-                    j++;
+        setTimeout(() => {
+            showScreen('surprise');
+            document.body.style.background = 'var(--white)';
+            const text = `Feliz aniversário, Maria Cabeçuda!\n\nEspero que você tenha uma ótima vida pela frente, sempre alegrando nossos dias com esse sorriso contagiante.\n\nSabemos que você irá conquistar tudo o que quiser, pois você é uma garota esforçada, simpática e inteligente.\n\nQue cada sonho seu se torne realidade, que você continue inspirando todos ao seu redor, e que nunca falte alegria, amor e amizade verdadeira na sua vida.\n\nNão sei para você, mas conhecer você me ajudou muito e me fez perceber como pessoas especiais como você fazem a diferença no mundo.\n\nObrigado por existir e por permitir que a gente faça parte da sua história. ❤️\n– O certo é “recursos” e não “rescusos”. – Riam Miguel`;
+            const typingText = document.getElementById('typing-text');
+            
+            const formattedText = text.replace(/\n/g, '<br>');
+            let j = 0;
+            typingText.innerHTML = '';
+            
+            function typeWriter() {
+                if (j < formattedText.length) {
+                    if (formattedText.substring(j, j + 4) === '<br>') {
+                        typingText.innerHTML += '<br>';
+                        j += 4;
+                    } else {
+                        typingText.innerHTML += formattedText.charAt(j);
+                        j++;
+                    }
+                    setTimeout(typeWriter, 30);
                 }
-                setTimeout(typeWriter, 30);
             }
-        }
-        typeWriter();
+            typeWriter();
 
-        const canvas = document.getElementById('confetti-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        let particles = [];
-        const colors = ["#e63946", "#ff8fa3", "#ffb3c1"];
-        for(let i=0; i<200; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height - canvas.height,
-                size: Math.random() * 10 + 5,
-                color: colors[Math.floor(Math.random() * colors.length)],
-                velocity: { x: Math.random() * 4 - 2, y: Math.random() * 5 + 2 }
-            });
-        }
-        function animateConfetti() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach((p, i) => {
-                p.y += p.velocity.y;
-                p.x += p.velocity.x;
-                ctx.fillStyle = p.color;
-                ctx.fillRect(p.x, p.y, p.size, p.size);
-                if (p.y > canvas.height + 20) particles.splice(i, 1);
-            });
-            if (particles.length > 0) requestAnimationFrame(animateConfetti);
-        }
-        animateConfetti();
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            let particles = [];
+            const items = ["#e63946", "#ff8fa3", "#ffb3c1", "🥣", "🥭"];
+            for(let i=0; i<200; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 15 + 10,
+                    item: items[Math.floor(Math.random() * items.length)],
+                    velocity: { x: Math.random() * 4 - 2, y: Math.random() * 5 + 2 }
+                });
+            }
+            function animateConfetti() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach((p, i) => {
+                    p.y += p.velocity.y;
+                    p.x += p.velocity.x;
+                    if (p.item.startsWith("#")) {
+                        ctx.fillStyle = p.item;
+                        ctx.fillRect(p.x, p.y, p.size, p.size);
+                    } else {
+                        ctx.font = `${p.size}px Arial`;
+                        ctx.fillText(p.item, p.x, p.y);
+                    }
+                    if (p.y > canvas.height + 20) particles.splice(i, 1);
+                });
+                if (particles.length > 0) requestAnimationFrame(animateConfetti);
+            }
+            animateConfetti();
+        }, 800);
     }
 
     buttons.start.addEventListener('click', startStory);
@@ -531,6 +537,7 @@
     buttons.restart.addEventListener('click', () => {
         showScreen('start');
         document.body.style.background = `linear-gradient(135deg, var(--background-start), var(--background-end))`;
+        buttons.head.classList.remove('exploding');
     });
 
 </script>
