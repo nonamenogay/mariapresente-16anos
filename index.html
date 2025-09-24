@@ -38,6 +38,17 @@
             width: 100%;
             max-width: 960px;
             text-align: center;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .main-container.shake {
+            animation: screen-shake 0.5s ease-in-out;
+        }
+
+        @keyframes screen-shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
         }
         
         .screen {
@@ -66,11 +77,15 @@
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             opacity: 0;
-            transition: opacity 1s ease;
+            transition: opacity 1.5s ease, transform 1.5s ease;
             background-size: cover;
             background-position: center;
+            transform: scale(1.1);
         }
-        .scene-bg.active { opacity: 1; }
+        .scene-bg.active { 
+            opacity: 1; 
+            transform: scale(1);
+        }
 
         #scene-casa { background-color: #faf0e6; }
         #scene-quarto { background-color: #e0d8f0; }
@@ -82,12 +97,24 @@
             bottom: 40px;
             width: 80px;
             height: 110px;
-            transition: all 0.5s ease;
             display: flex;
             flex-direction: column;
             align-items: center;
-            transition: transform 0.3s ease, filter 0.3s ease; /* Transição para o highlight */
+            transition: transform 0.4s ease, filter 0.4s ease, opacity 0.4s ease;
+            opacity: 0;
+            transform: translateY(20px);
         }
+
+        .character.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .character.speaking {
+            transform: translateY(-5px) scale(1.1);
+            filter: drop-shadow(0 0 10px var(--white));
+        }
+
         .character .visuals { position: relative; width: 60px; height: 90px; }
         .character .head {
             position: absolute; top: 0; left: 15px; width: 30px; height: 30px;
@@ -99,7 +126,7 @@
             background-color: #333;
             border-radius: 50%;
             top: 12px;
-            animation: blink 5s infinite;
+            animation: blink 5s infinite random;
         }
         .eye.left { left: 8px; }
         .eye.right { right: 20px; }
@@ -125,19 +152,37 @@
             margin-top: 5px;
         }
 
-        /* Personagens Customizados */
+        /* ----- CARACTERÍSTICAS ÚNICAS DOS PERSONAGENS ----- */
         #maria { left: 50%; transform: translateX(-50%); } #maria .body { background-color: var(--primary-color); }
-        #mae { left: 20%; } #mae .body { background-color: #8e44ad; } #mae .hair { background-color: #333; height: 25px; border-radius: 40% 40% 20% 20%;}
-        #irmao { right: 20%; } #irmao .body { background-color: #2980b9; } #irmao .hair { width: 30px; height: 10px; top: 0; left: 15px; border-radius: 20px; }
+        
+        #mae { left: 20%; } #mae .body { background-color: #8e44ad; } 
+        #mae .hair { background-color: #333; height: 25px; width: 30px; left: 15px; top: -2px; border-radius: 50%; } /* Coque */
+        
+        #irmao { right: 20%; } #irmao .body { background-color: #2980b9; } 
+        #irmao .hair { width: 30px; height: 10px; top: 0; left: 15px; border-radius: 20px; background-color: #5d4037;} /* Cabelo curto */
         
         .dream-char { animation: float 6s ease-in-out infinite; }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        
         #riam { left: 5%; bottom: 150px; } #riam .body { background-color: #1abc9c; }
-        #samuel { left: 20%; bottom: 190px; } #samuel .body { background-color: #e74c3c; }
-        #cecilia { left: 35%; bottom: 170px; } #cecilia .body { background-color: #f1c40f; } #cecilia .hair { background-color: #c68642; }
-        #maluhelen { right: 35%; bottom: 180px; } #maluhelen .body { background-color: #9b59b6; } #maluhelen .hair { background-color: #e91e63; height: 30px; width: 30px; left: 15px; border-radius: 50%; }
+        #samuel { left: 20%; bottom: 190px; } #samuel .body { background-color: #e74c3c; } #samuel .hair { background-color: #ff9800; } /* Cabelo Laranja */
+        
+        #cecilia { left: 35%; bottom: 170px; } #cecilia .body { background-color: #f1c40f; } 
+        #cecilia .hair { background-color: #c68642; height: 40px; border-radius: 30% 30% 40% 40%; } /* Cabelo Longo */
+        
+        #maluhelen { right: 35%; bottom: 180px; } #maluhelen .body { background-color: #9b59b6; } 
+        #maluhelen .hair { background-color: #e91e63; height: 30px; width: 30px; left: 15px; border-radius: 50%; } /* Cabelo Redondo */
+        
         #vitoria { right: 20%; bottom: 160px; } #vitoria .body { background-color: #3498db; }
+        #vitoria .hair { height: 10px; top: 20px; width: 45px; left: 7.5px; border-radius: 0 0 10px 10px; } /* Rabo de cavalo baixo */
+
         #maira { right: 5%; bottom: 200px; filter: drop-shadow(0 0 10px white); } #maira .body { background-color: var(--white); } #maira .hair { background-color: #fdd835; }
+
+        /* NOVO PERSONAGEM: HYUNJIN */
+        #hyunjin { left: 50%; bottom: 220px; transform: translateX(-50%); filter: drop-shadow(0 0 15px #ffffffaa); }
+        #hyunjin .body { background-color: #2c3e50; } /* Roupa escura */
+        #hyunjin .hair { background-color: #e0e0e0; border-radius: 50% 50% 10% 10%; height: 25px; } /* Cabelo "prateado" */
+
 
         .speech-bubble {
             position: absolute; bottom: 220px;
@@ -164,7 +209,7 @@
             border-top: 8px solid var(--white); margin-top: -1.5px;
         }
 
-        .scene-element { position: absolute; opacity: 0; transition: opacity 0.5s; }
+        .scene-element { position: absolute; opacity: 0; transition: opacity 1s ease-in-out; }
         #table-element { bottom: 0; left: 50%; transform: translateX(-50%); width: 450px; height: 140px; background-color: var(--table-color); border-top: 10px solid #804020; }
         .table-food { bottom: 140px; font-size: 30px; }
         #cuscuz-food { left: 35%; } #acerola-food { left: 60%; }
@@ -215,7 +260,6 @@
         .hidden { display: none !important; }
         canvas#confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 100; }
 
-        /* ESTILOS PARA CELULAR (RESPONSIVO) */
         @media (max-width: 768px) {
             .main-container, .screen { padding: 10px; }
             #cutscene-container { height: 70vh; }
@@ -225,11 +269,10 @@
             .character .hair { left: 5px; }
             .eye { width: 3px; height: 4px; top: 10px; }
             .eye.left { left: 7px; } .eye.right { right: 7px; }
-            #irmao .hair { left: 10px; }
-            #maluhelen .hair { left: 10px; }
-            .character.speaking { /* Highlight para o personagem que fala no celular */
-                transform: scale(1.15);
-                filter: drop-shadow(0 0 8px var(--white));
+            #irmao .hair, #mae .hair, #maluhelen .hair { left: 10px; }
+            
+            .character.speaking {
+                transform: scale(1.1) translateY(-3px);
             }
             .name-tag { font-size: 0.7em; }
             #mae { left: 5%; }
@@ -242,7 +285,6 @@
             .speech-bubble::after, .speech-bubble::before { display: none; }
             .dream-char { animation: none; }
             
-            /* Nova posição dos personagens no sonho (CELULAR) */
             #maria.in-dream { bottom: 30px; }
             #riam.in-dream { left: 5%; bottom: 250px; }
             #samuel.in-dream { right: 5%; bottom: 250px; }
@@ -250,6 +292,8 @@
             #maluhelen.in-dream { right: 15%; bottom: 180px; }
             #vitoria.in-dream { left: 25%; bottom: 110px; }
             #maira.in-dream { right: 25%; bottom: 110px; }
+            /* HYUNJIN NO CELULAR */
+            #hyunjin.in-dream { left: 50%; bottom: 300px; transform: translateX(-50%); }
             
             #table-element { width: 100%; height: 100px; }
             .table-food { bottom: 100px; }
@@ -284,12 +328,13 @@
             <div id="maria" class="character"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Maria</div></div>
             <div id="mae" class="character"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Mãe</div></div>
             <div id="irmao" class="character"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Irmão</div></div>
-            <div id="riam" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Riam</div></div>
-            <div id="samuel" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Samuel</div></div>
-            <div id="cecilia" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Cecília</div></div>
-            <div id="maluhelen" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Maluhelen</div></div>
-            <div id="vitoria" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Vitória</div></div>
-            <div id="maira" class="character dream-char hidden"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Maira</div></div>
+            <div id="riam" class="character dream-char"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Riam</div></div>
+            <div id="samuel" class="character dream-char"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Samuel</div></div>
+            <div id="cecilia" class="character dream-char"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Cecília</div></div>
+            <div id="maluhelen" class="character dream-char"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Maluhelen</div></div>
+            <div id="vitoria" class="character dream-char"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Vitória</div></div>
+            <div id="maira" class="character dream-char"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Maira</div></div>
+            <div id="hyunjin" class="character dream-char"><div class="visuals"><div class="hair"></div><div class="head"><div class="eye left"></div><div class="eye right"></div></div><div class="body"></div></div><div class="name-tag">Hyunjin</div></div>
 
             <div id="bubble" class="speech-bubble"></div>
         </div>
@@ -356,8 +401,16 @@
         { scene: 3, speaker: 'vitoria', text: "Você sempre ilumina nossos dias, mesmo quando tenta esconder com sarcasmo." },
         { scene: 3, speaker: 'maira', text: "Maria... você tem um brilho que não pode ser ignorado. Você me inspira." },
         { scene: 3, speaker: 'maria', text: "Eu não acredito... vocês fizeram isso tudo... por mim?" },
-        { scene: 3, speaker: 'riam', text: "Por você a gente faz qualquer coisa. Você não tem ideia do quanto sua amizade é importante pra mim e pra todo mundo aqui." },
-        { scene: 3, speaker: 'riam', text: "E nem começou, visse? Isso aqui é só a versão beta. Espera até ver o presente." },
+        { scene: 3, speaker: 'riam', text: "Por você a gente faz qualquer coisa. Sua amizade é importante pra todos nós." },
+        // DIÁLOGO COM HYUNJIN CORRIGIDO
+        { scene: 3, speaker: 'maria', text: "Espera... aquela luz... HYUNJIN?! Não pode ser... eu tô sonhando mesmo!" },
+        { scene: 3, speaker: 'maria', text: "Eu... eu te amo! O Stray Kids é tudo pra mim!" },
+        { scene: 3, speaker: 'hyunjin', text: "Nós também amamos vocês. Fãs como você são o motivo de tudo que fazemos." },
+        { scene: 3, speaker: 'hyunjin', text: "Fiquei sabendo que é seu aniversário. Parabéns, Maria!" },
+        { scene: 3, speaker: 'maria', text: "Você sabe meu nome?! Ai meu Deus..." },
+        { scene: 3, speaker: 'hyunjin', text: "Claro. Hoje o dia é todo seu. Aproveite cada momento." },
+        { scene: 3, speaker: 'hyunjin', text: "Seus amigos me disseram o quanto você é especial. Continue sendo essa fã incrível." },
+        { scene: 3, speaker: 'riam', text: "E isso nem é tudo. É só o começo. Espere até ver o presente de verdade." },
         { scene: 4, speaker: 'riam', text: "Agora... clica ali naquele botão… e estoura essa cabeça gigante!" },
     ];
 
@@ -375,36 +428,36 @@
 
         document.querySelectorAll('.scene-bg').forEach(bg => bg.classList.remove('active'));
         document.querySelectorAll('.scene-element').forEach(el => el.style.opacity = '0');
-        document.querySelectorAll('.character').forEach(ch => {
-            ch.classList.add('hidden');
-            ch.classList.remove('in-dream'); // Limpa a classe de posicionamento mobile
+        const allChars = document.querySelectorAll('.character');
+        allChars.forEach(ch => {
+            ch.classList.remove('visible');
+            ch.classList.remove('in-dream'); 
         });
 
 
         if (sceneId === 1) { // Casa
             document.getElementById('scene-casa').classList.add('active');
             document.getElementById('table-element').style.opacity = '1';
-            ['maria', 'mae', 'irmao'].forEach(id => document.getElementById(id).classList.remove('hidden'));
+            ['maria', 'mae', 'irmao'].forEach(id => document.getElementById(id).classList.add('visible'));
         } else if (sceneId === 2) { // Quarto
             document.getElementById('scene-quarto').classList.add('active');
             document.getElementById('skz-poster').style.opacity = '1';
-            document.getElementById('maria').classList.remove('hidden'); // Maria precisa estar no quarto
+            document.getElementById('maria').classList.add('visible'); 
         } else if (sceneId === 3 || sceneId === 4) { // Sonho e Festa
             const sceneName = sceneId === 3 ? 'sonho' : 'festa';
             const elementName = sceneId === 3 ? 'dream-sign' : 'party-banner';
             document.getElementById(`scene-${sceneName}`).classList.add('active');
             document.getElementById(elementName).style.opacity = '1';
-            const dreamChars = ['maria', 'riam', 'samuel', 'cecilia', 'maluhelen', 'vitoria', 'maira'];
+            const dreamChars = ['maria', 'riam', 'samuel', 'cecilia', 'maluhelen', 'vitoria', 'maira', 'hyunjin'];
             dreamChars.forEach(id => {
                 const el = document.getElementById(id);
-                el.classList.remove('hidden');
-                el.classList.add('in-dream'); // Adiciona classe para posicionamento mobile
+                el.classList.add('visible');
+                el.classList.add('in-dream'); 
             });
         }
     }
     
     function updateDialogue() {
-        // Remove highlight do personagem anterior
         document.querySelectorAll('.character').forEach(ch => ch.classList.remove('speaking'));
 
         const line = script[scriptIndex];
@@ -427,16 +480,14 @@
                 const speakerEl = document.getElementById(line.speaker);
                 const speakerName = speakerEl.querySelector('.name-tag').innerText;
                 bubble.innerHTML = `<strong class="speaker-name">${speakerName}</strong><span>${line.text}</span>`;
-                if(window.innerWidth <= 768) { // Adiciona highlight no mobile
-                    speakerEl.classList.add('speaking');
-                }
+                speakerEl.classList.add('speaking');
             } else {
                 bubble.innerHTML = `<span>${line.text}</span>`;
             }
 
             bubble.style.transform = 'translateX(0)';
 
-            if (line.speaker && window.innerWidth > 768) { // Apenas posiciona o balão no desktop
+            if (line.speaker && window.innerWidth > 768) {
                 const speakerEl = document.getElementById(line.speaker);
                 const speakerRect = speakerEl.getBoundingClientRect();
                 const containerRect = container.getBoundingClientRect();
@@ -450,31 +501,34 @@
                     bubbleLeft = container.offsetWidth - bubbleWidth - containerPadding;
                 }
                 bubble.style.left = `${bubbleLeft}px`;
-            } else { // Centraliza no celular ou para narração
+            } else { 
                 bubble.style.left = '50%';
                 bubble.style.transform = 'translateX(-50%)';
             }
             
             bubble.classList.add('visible');
             scriptIndex++;
-        }, 100);
+        }, 200);
     }
     
     function startStory() {
         scriptIndex = 0;
         currentScene = 0;
+        document.querySelectorAll('.character').forEach(ch => ch.classList.remove('visible'));
         showScreen('cutscene');
         buttons.next.classList.remove('hidden');
         updateDialogue();
     }
     
     function showFinalSurprise() {
+        document.querySelector('.main-container').classList.add('shake');
         buttons.head.classList.add('exploding');
         
         setTimeout(() => {
+            document.querySelector('.main-container').classList.remove('shake');
             showScreen('surprise');
             document.body.style.background = 'var(--white)';
-            const text = `Feliz aniversário, Maria Cabeçuda!\n\nEspero que você tenha uma ótima vida pela frente, sempre alegrando nossos dias com esse sorriso contagiante.\n\nSabemos que você irá conquistar tudo o que quiser, pois você é uma garota esforçada, simpática e inteligente.\n\nQue cada sonho seu se torne realidade, que você continue inspirando todos ao seu redor, e que nunca falte alegria, amor e amizade verdadeira na sua vida.\n\nNão sei para você, mas conhecer você me ajudou muito e me fez perceber como pessoas especiais como você fazem a diferença no mundo.\n\nObrigado por existir e por permitir que a gente faça parte da sua história. ❤️\n– O certo é “recursos” e não “rescusos”. – Riam Miguel`;
+            const text = `Feliz aniversário, Maria Cabeçuda.\nEu não sou o tipo de pessoa que costuma escrever cartas assim.\n\nNormalmente, não me envolvo, não me empolgo com datas, e não fico pensando em sentimentos ou expectativas.\n\nMas hoje, de algum jeito, você merece que eu escreva.\nMesmo que a gente não se conheça profundamente, você conseguiu se destacar.\n\nE não foi por esforço, nem por tentar chamar atenção. Foi só você sendo você — espontânea, divertida e única.\nTem pequenas coisas suas que sempre me chamaram atenção:\n\nO bocejo de Demogorgon que você solta, impossível de esquecer e impossível de não rir;\nAqueles gritos inesperados que aparecem do nada, que parecem exagerados, mas acabam virando piadas depois;\nO jeito que você fala sobre si mesma, como se estivesse narrando episódios da sua própria série;\nA forma como você se dedica à maquiagem, escolhendo cores e detalhes que mostram que você se conhece e gosta de se expressar;\nSeu humor leve, que não força nada, que simplesmente acontece;\nE a educação e simpatia que você demonstra mesmo quando ninguém exige isso.\nEu gosto de perceber quando algo te incomoda ou te deixa feliz.\n\nMesmo que você não perceba, me afeta te ver triste ou cabisbaixa.\n\nQuero ajudar, perguntar como você está ou animar você, mas sem invadir seu espaço.\n\neu fico torcendo para que você se sinta melhor, mesmo que eu não diga nada.\n\nVer você triste me deixa estranho de um jeito que não sei explicar, talvez seja porque eu sei como é ruim isso. Não é sofrimento, é só o reconhecimento de que você merece momentos mais leves, alegria e pequenas coisas que façam sorrir.\nMesmo sem muitos momentos juntos, foi bom conversar com você. Poucas palavras, mas que tiveram efeito. Isso já diz muito sobre você.\nEu gosto de como você é.\n\nGosto da autenticidade que você mantém em qualquer situação.\n\nGosto de como consegue ser divertida sem esforço, e como pequenas coisas que você faz acabam ficando na memória.\nTambém não posso deixar de falar da sua cabeça gigante. 😆 É inevitável continuar zoando. Mas mesmo nas brincadeiras, você tem meu respeito.\nEu não crio expectativas para a vida. Não sou movido por sonhos grandiosos. Não me apego a pessoas facilmente.\n\nMas reconheço valor quando vejo, e você tem valor.\nVocê merece coisas boas. Merece alcançar o que deseja, ser feliz, ter pessoas sinceras ao seu redor, e continuar sendo exatamente quem é.\nSe algum dia você precisar de alguém — para conversar, desabafar, passar o tempo, escolher algo ou só estar junto de alguém que não vai te julgar — estarei aqui. Pode ser amanhã, daqui a cinco anos, ou daqui a dez.\nObrigado por existir, por ser autêntica, divertida, inteligente, educada e sincera.\n\nVocê deixou uma marca — pequena para alguns, grande para mim.\n– E só para fechar, o certo é recursos, não rescusos. Continuo lembrando você disso. 😆\n\nRiam Miguel`;
             const typingText = document.getElementById('typing-text');
             
             const formattedText = text.replace(/\n/g, '<br>');
